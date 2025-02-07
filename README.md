@@ -1,2 +1,14 @@
-# OKD-work
-document the installation process and experimenting with OKD
+# Cài đặt & thử nghiệm OKD (Openshift community version)
+
+
+sds
+
+
+
+
+
+
+
+
+
+
