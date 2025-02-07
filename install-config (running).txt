@@ -18,4 +18,4 @@ networking:
 platform:
   none: {}
 pullSecret: '{"auths":{"fake":{"auth":"aWQ6cGFzcwo="}}}'
-sshKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCZgg5kWnJZLVqEQ885cMpNQtUwkZSdmi3qTJ2e2ReR4z40apmX3B/39dur+trmbr8m2CzHruH5gOTcjq6yg0g93xRglh4SnDSP8Ylnrw/GHlyt6BfOwSQOMdndYue0EAJDict8cBka9X6/78PA+PUfRK5QM38xlrSuDtL3f6fVHLfEw7BDHpBNxW1+G4skOJCDMJv8okAf57Dw2rQ1S8D6GF+/xWSt0/igS46Nv8lCnva4TZh6QsZuFPocN2W9Dh5q4+QFh8ChBy1SS2AJ+SFsGh/GsnHBd5acJKfqhVzPLGD//4oaVj07abLkEmV5DIwsUnMb+oMs+FlDatyq3Bov74NSHMs12aPFPFSdpcbwQdJz0lM6ilO9n7H+7H7aYP6UhZIVFiIavrwvQzxN2wn06QaIVidMfFFRHPVGHCOSjvMo50C+rn6N3sYqNtK9IWOndj9zmOTobjvIFDNCz/JH9wbl5QEWmiYM2HhjHsHE2Kx09A6sT0iz5pBp1WdsHe8= tudao@okd4-services'
+sshKey: 'your-key'
