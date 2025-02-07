@@ -31,7 +31,8 @@ options {
         listen-on-v6 { any; };
 };
 
- cat named.conf.local
+##############################
+cat named.conf.local
 acl trusted_network {
         localhost;
         10.0.0.0/24;
@@ -80,7 +81,7 @@ view "external" {
                 file "/etc/bind/db.okd4.elcom.com";
         };
 };
-
+###################################
 cat db.elc.com
 ;
 ; BIND data file for local 10.0.0.0/24
@@ -112,8 +113,8 @@ master2.okd4.elc.com.   IN      A       10.0.0.30
 compute0.okd4.elc.com.  IN      A       10.0.0.110
 compute1.okd4.elc.com.  IN      A       10.0.0.120
 
-
- cat db.0.0.10
+##########################################
+cat db.0.0.10
 ;
 ; BIND reverse data file for local loopback interface
 ;
