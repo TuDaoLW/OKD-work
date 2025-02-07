@@ -1,1 +1,0 @@
-CICD với OKD
