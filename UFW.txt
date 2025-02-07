@@ -1,9 +1,9 @@
-edit /etc/sysctl.conf ipv4 = 1
+edit /etc/sysctl.conf change ipv4forward = 1
 
 sudo ufw default allow incoming
 sudo ufw default allow outgoing
 
-edit /etc/ufw/before.rules
+edit /etc/ufw/before.rules 
 #
 # rules.before
 #
@@ -22,5 +22,5 @@ edit /etc/ufw/before.rules
 
 COMMIT
 
-edit /etc/default/ufw Forward = accept
+edit /etc/default/ufw and change Forward = accept
 
