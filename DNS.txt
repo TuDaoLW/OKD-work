@@ -1,0 +1,140 @@
+cat named.conf.options
+
+options {
+        directory "/var/cache/bind";
+
+        // If there is a firewall between you and nameservers you want
+        // to talk to, you may need to fix the firewall to allow multiple
+        // ports to talk.  See http://www.kb.cert.org/vuls/id/800113
+
+        // If your ISP provided one or more IP addresses for stable
+        // nameservers, you probably want to use them as forwarders.
+        // Uncomment the following block, and insert the addresses replacing
+        // the all-0's placeholder.
+
+        forwarders {
+                8.8.8.8;
+                1.1.1.1;
+                8.8.4.4;
+        };
+
+        //========================================================================
+        // If BIND logs error messages about the root key being expired,
+        // you will need to update your keys.  See https://www.isc.org/bind-keys
+        //========================================================================
+        dnssec-validation no;
+        recursion yes;
+        allow-query { any; };
+        allow-query-cache { any; };
+        allow-recursion { any; };
+        listen-on port 53 { any; };
+        listen-on-v6 { any; };
+};
+
+ cat named.conf.local
+acl trusted_network {
+        localhost;
+        10.0.0.0/24;
+};
+
+acl external_net {
+        192.168.10.0/24;
+};
+
+
+view "internal" {
+        match-clients { trusted_network; };
+        dnssec-validation no;
+        recursion yes;
+        allow-query { trusted_network; };
+        allow-query-cache { trusted_network; };
+        allow-recursion { trusted_network; };
+
+        zone "elc.com" {
+                type master;
+                file "/etc/bind/db.elc.com";
+        };
+
+        zone "0.0.10.in-addr.arpa" {
+                type master;
+                file "/etc/bind/db.0.0.10";
+        };
+};
+
+view "external" {
+        match-clients { any; };
+        recursion yes;
+
+        dnssec-validation no;
+        allow-query { any; };
+        allow-query-cache { any; };
+        allow-recursion { any; };
+
+        zone "10.168.192.in-addr.arpa" {
+                type master;
+                file "/etc/bind/db.10.168.192";
+        };
+
+        zone "elc.com" {
+                type master;
+                file "/etc/bind/db.okd4.elcom.com";
+        };
+};
+
+cat db.elc.com
+;
+; BIND data file for local 10.0.0.0/24
+;
+$TTL    604800
+@       IN      SOA     ns1.elc.com. tudao.elc.com. (
+                              3         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      ns1.elc.com.
+ns1.elc.com.    IN      A       10.0.0.1
+
+services.okd4.elc.com.  IN      A       10.0.0.1
+services.elc.com.       IN      A       10.0.0.1
+
+api.okd4.elc.com.       IN      A       10.0.0.1
+api-int.okd4.elc.com.   IN      A       10.0.0.1
+*.apps.okd4.elc.com.    IN      A       10.0.0.1
+
+bootstrap.okd4.elc.com. IN      A       10.0.0.100
+
+master0.okd4.elc.com.   IN      A       10.0.0.10
+master1.okd4.elc.com.   IN      A       10.0.0.20
+master2.okd4.elc.com.   IN      A       10.0.0.30
+
+compute0.okd4.elc.com.  IN      A       10.0.0.110
+compute1.okd4.elc.com.  IN      A       10.0.0.120
+
+
+ cat db.0.0.10
+;
+; BIND reverse data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     ns1.elc.com. tudao.elc.com. (
+                              3         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      ns1.elc.com.
+1       IN      PTR     ns1.elc.com.
+1       IN      PTR     services.elc.com.
+1       IN      PTR     services.okd4.elc.com.
+1       IN      PTR     api.okd4.elc.com.
+1       IN      PTR     api-int.okd4.elc.com.
+;1      IN      PTR     *.apps.okd4.elc.com.
+10      IN      PTR     master0.okd4.elc.com.
+20      IN      PTR     master1.okd4.elc.com.
+30      IN      PTR     master2.okd2.elc.com.
+100     IN      PTR     bootstrap.okd4.elc.com.
+110     IN      PTR     compute0.okd4.elc.com.
+120     IN      PTR     compute1.okd4.elc.com.

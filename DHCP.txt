@@ -1,0 +1,58 @@
+root@okd4-services:/# cat /etc/dhcp/dhcpd.conf
+# option definitions common to all supported networks...
+option domain-name "elc.com";
+option domain-name-servers ns1.elc.com;
+
+default-lease-time 600;
+max-lease-time 7200;
+
+# The ddns-updates-style parameter controls whether or not the server will
+# attempt to do a DNS update when a lease is confirmed. We default to the
+# behavior of the version 2 packages ('none', since DHCP v2 didn't
+# have support for DDNS.)
+ddns-update-style none;
+
+# This is a very basic subnet declaration.
+
+subnet 10.0.0.0 netmask 255.255.255.0 {
+        option routers                  10.0.0.1;
+        option subnet-mask              255.255.255.0;
+        option domain-name              "elc.com";
+        option domain-name-servers      10.0.0.1;
+        range 10.0.0.150                10.0.0.254;
+}
+
+host okd4-bootstrap {
+        hardware ethernet       BC:24:11:67:97:90;
+        fixed-address           10.0.0.100;
+}
+
+host okd4-master0 {
+        hardware ethernet       BC:24:11:43:01:E3;
+        fixed-address           10.0.0.10;
+}
+
+host okd4-master1 {
+        hardware ethernet       BC:24:11:1C:83:D4;
+        fixed-address           10.0.0.20;
+}
+#
+#host okd4-master2 {
+#        hardware ethernet       <mac>;
+#        fixed-address           10.0.0.30;
+#}
+
+host okd-compute0 {
+        hardware ethernet       00:50:56:25:0E:24;
+        fixed-address           10.0.0.110;
+}
+#
+host okd-compute1 {
+        hardware ethernet       00:50:56:20:B0:10;
+        fixed-address           10.0.0.120;
+}
+
+host okd-sno {
+        hardware ethernet       00:50:56:20:B0:20;
+        fixed-address           10.0.0.40;
+}

@@ -1,0 +1,26 @@
+edit /etc/sysctl.conf ipv4 = 1
+
+sudo ufw default allow incoming
+sudo ufw default allow outgoing
+
+edit /etc/ufw/before.rules
+#
+# rules.before
+#
+# Rules that should be run before the ufw command line added rules. Custom
+# rules should be added to one of these chains:
+#   ufw-before-input
+#   ufw-before-output
+#   ufw-before-forward
+#
+# NAT table rules
+*nat
+:POSTROUTING ACCEPT [0:0]
+
+# Forward traffic from the local network through the internet interface
+-A POSTROUTING -s 10.0.0.0/24 -o ens18 -j MASQUERADE
+
+COMMIT
+
+edit /etc/default/ufw Forward = accept
+
